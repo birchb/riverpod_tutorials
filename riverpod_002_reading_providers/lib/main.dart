@@ -68,7 +68,7 @@ class TodoScreen extends StatelessWidget {
                       builder: (context, watch, child) {
                         return ListView(
                           children: [
-                            ...watch(todosProvider.state)
+                            ...watch(todosProvider)
                                 .map(
                                   (todo) => ProviderScope(
                                     overrides: [
@@ -164,7 +164,7 @@ class _TodoItemState extends State<TodoItem> {
                       hasFocus = false;
                     });
                     // Method 3
-                    context.read(todosProvider).edit(
+                    context.read(todosProvider.notifier).edit(
                         id: todo.id, description: _textEditingController.text);
                   } else {
                     _textEditingController.text = todo.description;
@@ -193,14 +193,14 @@ class _TodoItemState extends State<TodoItem> {
                         value: todo.completed,
                         onChanged: (_) {
                           // Method 3
-                          context.read(todosProvider).toggle(todo.id);
+                          context.read(todosProvider.notifier).toggle(todo.id);
                         },
                       ),
                       IconButton(
                         icon: Icon(Icons.delete),
                         onPressed: () {
                           // Method 3
-                          context.read(todosProvider).remove(todo.id);
+                          context.read(todosProvider.notifier).remove(todo.id);
                         },
                       ),
                     ],
@@ -272,7 +272,7 @@ class _AddTodoPanelState extends State<AddTodoPanel> {
 
   void _submit([String value]) {
     // Method 3
-    context.read(todosProvider).add(_textEditingController.value.text);
+    context.read(todosProvider.notifier).add(_textEditingController.value.text);
     _textEditingController.clear();
   }
 

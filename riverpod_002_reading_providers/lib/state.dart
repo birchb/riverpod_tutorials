@@ -9,13 +9,13 @@ final _sampleTodos = [
   Todo('Learn Riverpod'),
 ];
 
-final todosProvider = StateNotifierProvider<TodoNotifier>((ref) {
+final todosProvider = StateNotifierProvider<TodoNotifier, List<Todo>>((ref) {
   return TodoNotifier(ref.read, _sampleTodos);
 });
 
 final completedTodos = Provider<List<Todo>>((ref) {
   // Method 4
-  final todos = ref.watch(todosProvider.state);
+  final todos = ref.watch(todosProvider);
   return todos.where((todo) => todo.completed).toList();
 });
 
